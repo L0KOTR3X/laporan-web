@@ -1,65 +1,51 @@
-const apiUrl = 'https://script.google.com/macros/s/AKfycbxV0pQLByXs6U8rLko1-gx7IT16znAV6b8NzN1E-Smkfef3-X2o4GNH_DLtxBhhBVHP/exec'; // Ganti dengan URL yang benar
+document.addEventListener("DOMContentLoaded", function() {
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyvBQg_KEDrDrLHFB9OP_xuseA0ia74q8UamATNifIl1QTA5XayCFBdmfPoGhDdmFWkqw/exec'; // Ganti dengan ID script kamu
+    
+    // Ambil data dari Google Sheets
+    async function fetchData() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-async function fetchData() {
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        console.log('Data received:', data);  // Menambahkan log untuk melihat data
-        renderTable(data);
-    } catch (error) {
-        console.error('Error fetching data:', error);
+            if (data.error) {
+                console.error(data.error);
+                document.getElementById('reportTable').innerHTML = `<p>${data.error}</p>`;
+            } else {
+                displayData(data);
+            }
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+            document.getElementById('reportTable').innerHTML = `<p>Error fetching data. Please try again later.</p>`;
+        }
     }
-}
 
-function renderTable(data) {
-    const tableBody = document.querySelector('#report-table tbody');
-    tableBody.innerHTML = '';  // Clear existing data
-    let totalPayout = 0;
+    // Menampilkan data ke tabel
+    function displayData(data) {
+        let tableBody = document.getElementById('reportTableBody');
+        tableBody.innerHTML = '';  // Kosongkan tabel sebelum menambahkan data baru
 
-    data.forEach((item, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${item.Username}</td>
-            <td>${item.Network}</td>
-            <td>${item.Country}</td>
-            <td>${item.OS}</td>
-            <td>${parseFloat(item.Payout).toFixed(2)}</td>
-        `;
-        tableBody.appendChild(row);
-        totalPayout += parseFloat(item.Payout) || 0;
-    });
-
-    document.getElementById('total-payout').textContent = totalPayout.toFixed(2);
-}
-
-// Filter function
-function filterData() {
-    const searchName = document.getElementById('search-name').value.toLowerCase();
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
-
-    fetchData().then(data => {
-        const filteredData = data.filter(item => {
-            let isMatch = true;
-
-            if (searchName && !item.Username.toLowerCase().includes(searchName)) {
-                isMatch = false;
+        data.forEach((row, index) => {
+            if (row.Username !== 'Total Payout') {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.No}</td>
+                    <td>${row.Username}</td>
+                    <td>${row.Network}</td>
+                    <td>${row.Country}</td>
+                    <td>${row.OS}</td>
+                    <td>${row.Payout}</td>
+                `;
+                tableBody.appendChild(tr);
             }
-
-            if (startDate && item.Date < startDate) {
-                isMatch = false;
-            }
-            if (endDate && item.Date > endDate) {
-                isMatch = false;
-            }
-
-            return isMatch;
         });
 
-        renderTable(filteredData);
-    });
-}
+        // Menampilkan total payout
+        const totalRow = data.find(row => row.Username === 'Total Payout');
+        if (totalRow) {
+            document.getElementById('totalPayout').textContent = `Total Payout: ${totalRow.Payout}`;
+        }
+    }
 
-// Initial fetch
-fetchData();
+    // Panggil fungsi fetchData untuk mengambil data
+    fetchData();
+});
