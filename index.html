@@ -7,24 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
     <h2>Live Report Dashboard</h2>
-    <table id="reportTable">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Username</th>
-                <th>Network</th>
-                <th>Country</th>
-                <th>OS</th>
-                <th>Payout</th>
-            </tr>
-        </thead>
-        <tbody id="reportTableBody"></tbody>
-    </table>
-    <p id="totalPayout">Total Payout: 0</p>
-</div>
-
+    
+    <div>
+        <input type="text" id="searchUsername" placeholder="Search by Username" onkeyup="searchData()">
+        <br><br>
+        
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
+        
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
+        
+        <button onclick="filterByDate()">Filter</button>
+        
+        <br><br>
+        
+        <table id="reportTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Network</th>
+                    <th>Country</th>
+                    <th>OS</th>
+                    <th>Payout</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody"></tbody>
+        </table>
+        
+        <p id="totalPayout">Total Payout: 0</p>
     </div>
 
     <script src="script.js"></script>
