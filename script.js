@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbzMiZp9ZzkvqnoXeWxDd92RJtL8S9xkEvKKfVvXwWSoVo6iv5gZGUlCoGy60lM6-G0R/exec'; // Ganti dengan ID script kamu
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyvBQg_KEDrDrLHFB9OP_xuseA0ia74q8UamATNifIl1QTA5XayCFBdmfPoGhDdmFWkqw/exec'; // Ganti dengan ID script kamu
     let reportData = [];  // Simpan data yang diambil dari Google Sheets
 
     // Fungsi untuk menampilkan data pada tabel
