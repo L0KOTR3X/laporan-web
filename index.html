@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Postback</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Report Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Laporan Postback</h1>
-  <table id="reportTable">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Username</th>
-        <th>Network</th>
-        <th>Country</th>
-        <th>OS</th>
-        <th>Payout</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <script src="https://apis.google.com/js/api.js"></script>
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Live Report Dashboard</h1>
+
+        <div class="filters">
+            <input type="text" id="search-name" placeholder="Search by username" oninput="filterData()">
+            <input type="date" id="start-date" onchange="filterData()">
+            <input type="date" id="end-date" onchange="filterData()">
+        </div>
+
+        <table id="report-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Network</th>
+                    <th>Country</th>
+                    <th>OS</th>
+                    <th>Payout</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="total-payout">
+            <strong>Total Payout: <span id="total-payout">0</span></strong>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
